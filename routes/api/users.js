@@ -11,23 +11,23 @@ const User = require("../../models/User");
 //@desc Register new user
 //@acess Public
 router.post("/", (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, email, password } = req.body;
 
   //Simple validation
-  if (!username || !email || !password) {
+  if (!name || !email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
   //Check for existing user
-  User.findOne({ email, username }).then(user => {
+  User.findOne({ email }).then(user => {
     if (user) return res.status(400).json({ msg: "User already exists" });
     const newUser = new User({
-      username,
+      name,
       email,
       password
     });
 
-    //Create sali & hash
+    //Create salt & hash
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
@@ -45,7 +45,7 @@ router.post("/", (req, res) => {
                         token,
                         user: {
                             id: user.id,
-                            username: user.username,
+                            name: user.name,
                             email: user.email
                         }
                     })
