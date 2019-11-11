@@ -1,13 +1,12 @@
 const express = require('express') //backend framework
 const mongoose = require('mongoose') //ORM to interact with MongoDB database
-const bodyParser = require('body-parser') //take request and get data from the body
 const items = require("./routes/api/items")
 const users = require("./routes/api/users")
 
 const app =  express();
 
 //Bodyparser Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // DB Config
 const db = require("./config/key").mongoURI;
