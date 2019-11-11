@@ -2,6 +2,7 @@ const express = require('express') //backend framework
 const mongoose = require('mongoose') //ORM to interact with MongoDB database
 const items = require("./routes/api/items")
 const users = require("./routes/api/users")
+const config = require('config')
 
 const app =  express();
 
@@ -9,7 +10,7 @@ const app =  express();
 app.use(express.json());
 
 // DB Config
-const db = require("./config/key").mongoURI;
+const db = config.get('mongoURI');
 
 //Connect to Mongo
 mongoose
